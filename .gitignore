@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.svelte-kit/
+
+# Vite cache
+.vite/
+
+# Editor / OS
+.DS_Store
+.DS_Store?
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Claude Code internals (not relevant to the project)
+.claude/
+.claude-flow/
+
+# TypeScript build info
+*.tsbuildinfo
