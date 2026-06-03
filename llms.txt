@@ -1,0 +1,75 @@
+# Studio Fab
+
+> Free browser-based parametric design tool for laser cutting. Generates production-ready SVG and DXF files. No account required, runs entirely in the browser.
+
+URL: https://studio-poetics.github.io/fab/
+Source: https://github.com/Studio-Poetics/fab
+License: See LICENSE file
+Tech: Svelte 5, TypeScript, Vite, Three.js
+
+## What it does
+
+Studio Fab lets you design laser-cut parts by entering numbers — dimensions, material thickness, kerf — and instantly see the flat-cut panels laid out, ready to export. It is parametric: change any value and everything updates in real time.
+
+## Modules
+
+### Box Generator
+Creates flat-cut panels for 6 box types with finger joints:
+- Open Tray — bottomless box, good for organizers and trays
+- Closed Box — 6-sided sealed box
+- Hinged Lid — box with an attached hinged top panel
+- Slider Lid — box with a lid that slides into grooves
+- Lift-Off Lid — box with a separate press-fit lid
+- Multi-Section — box divided into compartments by internal dividers
+
+Controls: width, height, depth, material thickness, kerf compensation, finger joint count, tab style.
+Export: SVG (flat cut layout) and DXF R12 (for LightBurn, RDWorks, Inkscape, Illustrator).
+
+### Electronics Enclosure Designer
+Designs project enclosures for electronics with standard connector cutouts on any face. Faces: Front, Back, Left, Right, Top, Bottom. Connector types available:
+- USB-C, USB-A, Micro-USB
+- HDMI, Mini-HDMI, DisplayPort
+- XLR (3-pin audio)
+- D-Sub DB9 and DB25 (serial / VGA)
+- 3.5mm audio jack, 6.35mm jack
+- IEC C14 power inlet
+- Mounting screw holes
+- Custom rectangle (any size)
+
+Includes a 3D assembly preview using Three.js with actual CSG holes cut through panels.
+
+### Gear Generator
+Designs involute spur gears, rack-and-pinion, and planetary gearsets. Parameters: module (tooth size), number of teeth, pressure angle, face width, bore hole diameter. Animates the gear mesh in the browser. Exports SVG for laser cutting.
+
+### Living Hinge Generator
+Creates laser-cut flex hinge patterns (kerf cuts) that allow rigid sheet material to bend. Patterns: kerf (straight cuts), wave, cross. Provides physics analysis: minimum bend radius, spring-back estimate. Exports cut pattern as SVG/DXF.
+
+### Kinematic Mechanism Designer
+Designs and animates 2D mechanisms:
+- Crank-Slider: converts rotary motion to linear reciprocating motion
+- Scotch Yoke: produces pure sinusoidal linear motion
+Exports linkage geometry as SVG for laser cutting and assembly.
+
+## Export formats
+
+- **SVG**: Scalable vector graphics. Opens in Inkscape, Adobe Illustrator, Affinity Designer, any browser.
+- **DXF R12**: AutoCAD Drawing Exchange Format. Opens in LightBurn, RDWorks, Fusion 360, AutoCAD, Rhino, QCAD.
+
+Kerf compensation is applied before export — the cut lines are already adjusted for the laser beam width.
+
+## Authors
+
+**Monalisa Thakur** — Senior Interaction Designer, NID (National Institute of Design) alumnus. Design lead at Studio Poetics and co-creator of Studio Fab.
+- https://monalisathakur.com/
+- https://www.linkedin.com/in/monalisa-thakur-71620056/
+
+**Pranshu Kumar Chaudhary** — Co-founder of Studio Poetics. Teaches design courses at Indian design universities. Developer and co-creator of Studio Fab.
+- https://wittywit.com/
+- https://www.linkedin.com/in/pranshu101/
+- https://www.instagram.com/createitwitty/
+
+**Studio Poetics** — https://poetics.studio
+
+## Optional: Structured data
+
+JSON-LD schema is embedded in the page `<head>` (WebApplication, Organization, Person types).

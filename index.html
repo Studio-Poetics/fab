@@ -3,10 +3,220 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>STUDIO FAB — Parametric Fabrication</title>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       PRIMARY IDENTITY
+  ════════════════════════════════════════════════════════════════ -->
+  <title>Studio Fab — Free Parametric Laser-Cut Design Tool</title>
+  <meta name="description" content="Studio Fab is a free browser-based parametric design tool for laser cutting. Design finger-jointed boxes, electronics enclosures, involute gear trains, living flex hinges, and kinematic mechanisms. Export SVG and DXF files ready for any laser cutter. No signup required.">
+  <meta name="keywords" content="laser cutting, parametric design, box generator, gear generator, living hinge, enclosure designer, SVG export, DXF export, laser cutter tool, CNC design, flat pack, finger joints, involute gears, flex hinge, kinematic mechanism, maker tool, fabrication tool, free laser cut files, box maker, laser cut box, gear train, spur gear, planetary gear, rack pinion, crank slider, Scotch yoke, electronics enclosure, project box">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <meta name="revisit-after" content="7 days">
+  <meta name="language" content="English">
+  <meta name="rating" content="General">
+  <meta name="category" content="Design Tools, Maker Tools, Fabrication">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://studio-poetics.github.io/fab/">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       AUTHORSHIP
+  ════════════════════════════════════════════════════════════════ -->
+  <meta name="author" content="Monalisa Thakur, Pranshu Kumar Chaudhary">
+  <meta name="designer" content="Monalisa Thakur — Senior Interaction Designer, NID alumnus">
+  <meta name="developer" content="Pranshu Kumar Chaudhary — Co-founder Studio Poetics, Design Educator">
+  <meta name="publisher" content="Studio Poetics">
+  <meta name="copyright" content="Studio Poetics">
+
+  <!-- Author profile links (rel=me signals identity to search engines and social graphs) -->
+  <link rel="me" href="https://monalisathakur.com/">
+  <link rel="me" href="https://www.linkedin.com/in/monalisa-thakur-71620056/">
+  <link rel="me" href="https://wittywit.com/">
+  <link rel="me" href="https://www.linkedin.com/in/pranshu101/">
+  <link rel="me" href="https://www.instagram.com/createitwitty/">
+  <link rel="author" href="https://monalisathakur.com/">
+  <link rel="author" href="https://wittywit.com/">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       OPEN GRAPH  (Facebook, LinkedIn, WhatsApp, Slack, Discord…)
+  ════════════════════════════════════════════════════════════════ -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="Studio Fab">
+  <meta property="og:title"       content="Studio Fab — Free Parametric Laser-Cut Design Tool">
+  <meta property="og:description" content="Design laser-cut boxes, enclosures, gears, flex hinges, and mechanisms in the browser. Export SVG and DXF. Free, no signup. By Studio Poetics.">
+  <meta property="og:url"         content="https://studio-poetics.github.io/fab/">
+  <meta property="og:locale"      content="en_US">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       TWITTER / X CARD
+  ════════════════════════════════════════════════════════════════ -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Studio Fab — Parametric Laser-Cut Design Tool">
+  <meta name="twitter:description" content="Design laser-cut boxes, gear trains, living hinges, enclosures and mechanisms in the browser. Export SVG + DXF. Free, no signup.">
+  <meta name="twitter:creator"     content="@createitwitty">
+  <meta name="twitter:site"        content="@createitwitty">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       AI & LLM DISCOVERY
+       These tags help AI assistants (ChatGPT plugins, Perplexity,
+       Claude, Gemini web access) understand what the page does.
+  ════════════════════════════════════════════════════════════════ -->
+  <meta name="ai:description" content="Studio Fab is a free parametric fabrication web application. It generates laser-cut-ready SVG and DXF files for: (1) finger-jointed wooden boxes in 6 types, (2) electronics project enclosures with standard connector cutouts (USB-C, HDMI, XLR, D-sub, audio jacks, mounting screws), (3) involute spur gear trains, rack-and-pinion, and planetary gearsets, (4) living flex hinge patterns (kerf, wave, cross) with physics analysis, (5) kinematic crank-slider and Scotch-yoke mechanisms. No backend, no login, runs entirely in the browser.">
+  <meta name="ai:capabilities"    content="parametric-cad, svg-export, dxf-export, laser-cutting, gear-design, enclosure-design, hinge-design, mechanism-design">
+  <meta name="ai:use-cases"       content="laser cutting, maker projects, electronics enclosures, educational fabrication, product prototyping, kinetic art, gear mechanisms">
+  <meta name="ai:tech-stack"      content="Svelte 5, TypeScript, Vite, Three.js, @dromney/gear-gen">
+  <link rel="llms.txt" href="./llms.txt" type="text/plain" title="AI/LLM documentation">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STRUCTURED DATA — JSON-LD
+       Parsed by Google, Bing, AI crawlers, and knowledge graphs.
+  ════════════════════════════════════════════════════════════════ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://studio-poetics.github.io/fab/#app",
+        "name": "Studio Fab",
+        "alternateName": ["Studio Fab", "StudioFab", "Parametric Fab Lab"],
+        "description": "Free browser-based parametric design tool for laser cutting. Generates SVG and DXF files for finger-jointed boxes, electronics enclosures, gear trains, living hinges, and kinematic mechanisms.",
+        "url": "https://studio-poetics.github.io/fab/",
+        "applicationCategory": "DesignApplication",
+        "applicationSubCategory": "Fabrication CAD Tool",
+        "operatingSystem": "Any (browser-based)",
+        "browserRequirements": "Requires JavaScript. Best in Chrome, Firefox, Safari, Edge.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "description": "Free to use, no account required"
+        },
+        "featureList": [
+          "Parametric box generator (open tray, closed box, hinged lid, slider lid, lift-off lid, multi-section)",
+          "Electronics enclosure designer with standard connector cutouts (USB-C, HDMI, XLR, D-sub, audio jacks)",
+          "Involute spur gear generator with rack-and-pinion and planetary gearset modes",
+          "Living flex hinge pattern generator (kerf, wave, cross patterns) with bend physics analysis",
+          "Kinematic mechanism designer (crank-slider, Scotch yoke)",
+          "SVG and DXF R12 export, kerf compensation, finger joint control",
+          "3D assembly preview via Three.js",
+          "Unit toggle (mm / inches), undo/redo, URL state persistence"
+        ],
+        "screenshot": "https://studio-poetics.github.io/fab/og-image.png",
+        "softwareVersion": "2.0",
+        "releaseNotes": "Complete rewrite in Svelte 5 + TypeScript. Added gear module, hinges module, kinetic module, enclosures module, 3D assembly preview.",
+        "author": [
+          { "@id": "https://studio-poetics.github.io/fab/#monalisa" },
+          { "@id": "https://studio-poetics.github.io/fab/#pranshu" }
+        ],
+        "creator": { "@id": "https://studio-poetics.github.io/fab/#studio-poetics" },
+        "publisher": { "@id": "https://studio-poetics.github.io/fab/#studio-poetics" },
+        "codeRepository": "https://github.com/Studio-Poetics/fab",
+        "license": "https://github.com/Studio-Poetics/fab/blob/main/LICENSE",
+        "inLanguage": "en",
+        "keywords": "laser cutting, parametric design, box generator, gear generator, living hinge, enclosure designer, SVG export, DXF export, maker tool, CNC, fabrication"
+      },
+
+      {
+        "@type": "Organization",
+        "@id": "https://studio-poetics.github.io/fab/#studio-poetics",
+        "name": "Studio Poetics",
+        "url": "https://poetics.studio",
+        "description": "Design and fabrication studio — parametric tools, kinetic art, and maker culture.",
+        "member": [
+          { "@id": "https://studio-poetics.github.io/fab/#monalisa" },
+          { "@id": "https://studio-poetics.github.io/fab/#pranshu" }
+        ]
+      },
+
+      {
+        "@type": "Person",
+        "@id": "https://studio-poetics.github.io/fab/#monalisa",
+        "name": "Monalisa Thakur",
+        "url": "https://monalisathakur.com/",
+        "email": "monalisa282.work@gmail.com",
+        "jobTitle": "Senior Interaction Designer",
+        "description": "Senior Interaction Designer and NID (National Institute of Design) alumnus. Design lead and co-creator of Studio Fab at Studio Poetics.",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "National Institute of Design",
+          "alternateName": "NID"
+        },
+        "sameAs": [
+          "https://monalisathakur.com/",
+          "https://www.linkedin.com/in/monalisa-thakur-71620056/"
+        ],
+        "worksFor": { "@id": "https://studio-poetics.github.io/fab/#studio-poetics" }
+      },
+
+      {
+        "@type": "Person",
+        "@id": "https://studio-poetics.github.io/fab/#pranshu",
+        "name": "Pranshu Kumar Chaudhary",
+        "url": "https://wittywit.com/",
+        "email": "pranshu@poetics.studio",
+        "jobTitle": "Co-founder & Design Educator",
+        "description": "Co-founder of Studio Poetics. Teaches design courses at Indian design universities. Developer and co-creator of Studio Fab.",
+        "sameAs": [
+          "https://wittywit.com/",
+          "https://www.linkedin.com/in/pranshu101/",
+          "https://www.instagram.com/createitwitty/"
+        ],
+        "worksFor": { "@id": "https://studio-poetics.github.io/fab/#studio-poetics" }
+      },
+
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Studio Fab",
+            "item": "https://studio-poetics.github.io/fab/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       DUBLIN CORE  (library / academic indexing)
+  ════════════════════════════════════════════════════════════════ -->
+  <meta name="DC.title"       content="Studio Fab — Parametric Laser-Cut Design Tool">
+  <meta name="DC.creator"     content="Monalisa Thakur">
+  <meta name="DC.creator"     content="Pranshu Kumar Chaudhary">
+  <meta name="DC.subject"     content="Parametric design, laser cutting, fabrication, CAD, maker tools">
+  <meta name="DC.description" content="Free browser-based parametric design tool for generating laser-cut SVG and DXF files.">
+  <meta name="DC.publisher"   content="Studio Poetics">
+  <meta name="DC.type"        content="InteractiveResource">
+  <meta name="DC.format"      content="text/html">
+  <meta name="DC.language"    content="en">
+  <meta name="DC.rights"      content="© Studio Poetics. All rights reserved.">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       FONTS
+  ════════════════════════════════════════════════════════════════ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       GOOGLE ANALYTICS
+       Replace G-XXXXXXXX with your Measurement ID from
+       https://analytics.google.com → Admin → Data Streams → Web stream
+  ════════════════════════════════════════════════════════════════ -->
+  <!-- Google tag (gtag.js)
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXX');
+  </script>
+  -->
 </head>
 <body>
   <div id="app"></div>
