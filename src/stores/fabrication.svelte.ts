@@ -1,13 +1,15 @@
-import type { Panel, Warning } from '$core/types';
+import type { Panel, Warning, LayoutResult } from '$core/types';
 import { DEFAULT_PARAMS, type BoxParams } from '$modules/boxes/types';
 import { generate } from '$modules/boxes/generator';
 import { validate, isValid } from '$core/fabrication/validation';
+import { layoutPanels } from '$core/geometry/layout';
 
 const HISTORY_LIMIT = 50;
 
 class FabStore {
   params   = $state<BoxParams>({ ...DEFAULT_PARAMS });
   panels   = $derived<Panel[]>(generate(this.params));
+  layout   = $derived<LayoutResult>(layoutPanels(this.panels, this.params.thickness));
   warnings = $derived<Warning[]>(validate(this.params));
   valid    = $derived<boolean>(isValid(this.warnings));
 
@@ -39,6 +41,12 @@ class FabStore {
   reset(): void {
     Object.assign(this.params, DEFAULT_PARAMS);
     this._history = [{ ...DEFAULT_PARAMS }];
+    this._cursor  = 0;
+  }
+
+  restore(saved: Partial<BoxParams>): void {
+    Object.assign(this.params, saved);
+    this._history = [{ ...this.params }];
     this._cursor  = 0;
   }
 }

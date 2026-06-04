@@ -221,7 +221,7 @@
     {#if !ps.spacingValid}
       <text x={cx} y={cy + ringDisplayR + 20} text-anchor="middle"
         font-family="IBM Plex Mono, monospace" font-size="10"
-        fill="#E85D04" letter-spacing="0.08em">SPACING WARN: (Ns+Nr)%n≠0</text>
+        fill="#C05430" letter-spacing="0.08em">SPACING WARN: (Ns+Nr)%n≠0</text>
     {/if}
 
     <!-- RPM readouts (bottom right) -->

@@ -23,7 +23,7 @@
 
   // matches flat-view fills
   const PAL: number[] = [0xF6F5F3, 0xEDECE9, 0xE8E7E4, 0xE2E1DC, 0xDDD8CF];
-  const HINGE_CLR = 0xE85D04;
+  const HINGE_CLR = 0xC05430;
 
   // ── slab spec: corner position + size + colour ────────────────────────────
   interface Slab {

@@ -2,7 +2,6 @@
   import { fab } from '$stores/fabrication.svelte';
   import { units } from '$stores/units.svelte';
   import { ui } from '$stores/ui.svelte';
-  import { layoutPanels } from '$core/geometry/layout';
   import { downloadSVG } from '$core/exporters/svg';
   import { downloadDXF } from '$core/exporters/dxf';
   import { downloadBoxZip } from '$core/exporters/zip';
@@ -11,7 +10,7 @@
     fab.panels.reduce((sum, p) => sum + p.width * p.height, 0)
   );
 
-  const layout     = $derived(layoutPanels(fab.panels, fab.params.thickness));
+  const layout     = $derived(fab.layout);
   const sheetFits  = $derived(layout.totalW <= ui.sheetW && layout.totalH <= ui.sheetH);
   const wasteArea  = $derived(ui.sheetW * ui.sheetH - totalArea);
   const wastePct   = $derived(sheetFits ? (wasteArea / (ui.sheetW * ui.sheetH) * 100) : null);
@@ -74,7 +73,11 @@
     </div>
     <div class="stat-row">
       <span class="stat-key">TOTAL AREA</span>
-      <span class="stat-val">{(totalArea / 100).toFixed(1)}<span class="unit"> cm²</span></span>
+      {#if units.display === 'in'}
+        <span class="stat-val">{(totalArea / 645.16).toFixed(2)}<span class="unit"> in²</span></span>
+      {:else}
+        <span class="stat-val">{(totalArea / 100).toFixed(1)}<span class="unit"> cm²</span></span>
+      {/if}
     </div>
     <div class="stat-row">
       <span class="stat-key">JOINT</span>
@@ -115,15 +118,21 @@
     <div class="sheet-inputs">
       <div class="sheet-field">
         <span class="stat-key">W</span>
-        <input type="number" class="sheet-input" value={ui.sheetW} min="50" max="3000" step="10"
-          onchange={e => ui.sheetW = parseFloat((e.target as HTMLInputElement).value)} />
-        <span class="stat-key">mm</span>
+        <input type="number" class="sheet-input"
+          value={units.toDisplay(ui.sheetW).toFixed(units.display === 'in' ? 2 : 0)}
+          min={units.toDisplay(50).toFixed(0)} max={units.toDisplay(3000).toFixed(0)}
+          step={units.dimStep()}
+          onchange={e => ui.sheetW = units.fromDisplay(parseFloat((e.target as HTMLInputElement).value))} />
+        <span class="stat-key">{units.label}</span>
       </div>
       <div class="sheet-field">
         <span class="stat-key">H</span>
-        <input type="number" class="sheet-input" value={ui.sheetH} min="50" max="3000" step="10"
-          onchange={e => ui.sheetH = parseFloat((e.target as HTMLInputElement).value)} />
-        <span class="stat-key">mm</span>
+        <input type="number" class="sheet-input"
+          value={units.toDisplay(ui.sheetH).toFixed(units.display === 'in' ? 2 : 0)}
+          min={units.toDisplay(50).toFixed(0)} max={units.toDisplay(3000).toFixed(0)}
+          step={units.dimStep()}
+          onchange={e => ui.sheetH = units.fromDisplay(parseFloat((e.target as HTMLInputElement).value))} />
+        <span class="stat-key">{units.label}</span>
       </div>
     </div>
     <div class="stat-row" style="margin-top:8px">

@@ -41,6 +41,12 @@ class HingeStore {
     this._history = [{ ...DEFAULT_HINGE_PARAMS }];
     this._cursor = 0;
   }
+
+  restore(saved: Partial<HingeParams>): void {
+    Object.assign(this.params, saved);
+    this._history = [{ ...this.params }];
+    this._cursor  = 0;
+  }
 }
 
 export const hingeFab = new HingeStore();

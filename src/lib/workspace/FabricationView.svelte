@@ -13,7 +13,7 @@
 
   const FILLS  = ['#F6F5F3','#EDECE9','#E8E7E4','#E2E1DC','#DDD8CF'];
   const CUT    = '#0C0C0B';
-  const HINGE  = '#E85D04';
+  const HINGE  = '#C05430';
   const GROOVE = '#1A7A3F';
   const MARGIN = 24;
 
@@ -73,6 +73,14 @@
   }
   function onMouseUp() { isDragging = false; }
 
+  function resetView() {
+    zoom = 1;
+    panX = 0;
+    panY = 0;
+  }
+
+  function onDblClick() { resetView(); }
+
   function getPath(panel: Panel): string {
     const { thickness: t, kerf: k, fingerCount: fc, joint } = params;
     const pts = panelPoints(panel.width, panel.height, t, k, fc, joint, panel.edges);
@@ -89,6 +97,7 @@
   onmousemove={onMouseMove}
   onmouseup={onMouseUp}
   onmouseleave={onMouseUp}
+  ondblclick={onDblClick}
   style="cursor: {isDragging ? 'grabbing' : 'grab'}"
 >
   <svg width={cw} height={ch} viewBox="0 0 {cw} {ch}">
@@ -188,6 +197,9 @@
       {/each}
     </g>
   </svg>
+
+  <button class="btn-reset" onclick={resetView} title="Reset view (or double-click)">⟳</button>
+  <div class="hint">SCROLL TO ZOOM · DRAG TO PAN · DOUBLE-CLICK TO FIT</div>
 </div>
 
 <style>
@@ -200,5 +212,29 @@
   .fab-view svg {
     width: 100%;
     height: 100%;
+  }
+  .btn-reset {
+    position: absolute;
+    top: 10px; right: 10px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--g500);
+    background: var(--white);
+    border: 1px solid var(--g200);
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.12s;
+    z-index: 10;
+  }
+  .btn-reset:hover { color: var(--black); border-color: var(--g400); }
+  .hint {
+    position: absolute;
+    bottom: 10px; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 9px; letter-spacing: 0.1em;
+    color: var(--g400);
+    pointer-events: none;
+    white-space: nowrap;
   }
 </style>

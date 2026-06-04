@@ -5,7 +5,7 @@ import { layoutPanels } from '$core/geometry/layout';
 
 const FILLS   = ['#F6F5F3','#EDECE9','#E8E7E4','#E2E1DC','#DDD8CF'];
 const CUT     = '#0C0C0B';
-const HINGE   = '#E85D04';
+const HINGE   = '#C05430';
 const GROOVE  = '#1A7A3F';
 const MARGIN  = 24;
 

@@ -27,6 +27,12 @@ class KineticStore {
     this._history = [{ ...DEFAULT_KINETIC_PARAMS }];
     this._cursor  = 0;
   }
+
+  restore(saved: Partial<KineticParams>): void {
+    Object.assign(this.params, saved);
+    this._history = [{ ...this.params }];
+    this._cursor  = 0;
+  }
 }
 
 export const kineticFab = new KineticStore();

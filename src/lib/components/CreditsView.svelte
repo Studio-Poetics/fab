@@ -238,8 +238,8 @@
     font-size: 8px;
     font-weight: 600;
     letter-spacing: 0.16em;
-    color: #E85D04;
-    background: rgba(232, 93, 4, 0.08);
+    color: #C05430;
+    background: rgba(192, 84, 48, 0.08);
     padding: 2px 6px;
   }
 

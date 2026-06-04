@@ -11,8 +11,8 @@
   --g600:     #3C3B38;
   --g700:     #252522;
   --g800:     #161614;
-  --orange:   #E85D04;
-  --orange-d: #C44D03;
+  --orange:   #C05430;
+  --orange-d: #A0431E;
   --red:      #D0190C;
   --green:    #1A7A3F;
 
@@ -652,3 +652,51 @@ svg    { display: block; }
 
 /* ─── UTILITIES ──────────────────────────────────────────────────────────── */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* ─── TABLET (≤1100px) ────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  :root { --panel-w: 250px; }
+  .module-btn { padding: 6px 9px; }
+}
+
+/* ─── NARROW TABLET / PORTRAIT (≤860px) ──────────────────────────────────── */
+@media (max-width: 860px) {
+  :root { --panel-w: 300px; }
+
+  .wordmark { display: none; }
+  .toolbar-divider { display: none; }
+  .module-btn { padding: 6px 8px; font-size: 10px; }
+  .toolbar-module-tag { display: none; }
+
+  .drawer-toggle { display: flex; }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .panel-left, .panel-right {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: var(--panel-w);
+    z-index: 50;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s;
+  }
+  .panel-left  { left: 0;  transform: translateX(-100%); box-shadow: none; }
+  .panel-right { right: 0; transform: translateX(100%);  box-shadow: none; }
+
+  .main-grid.left-open  .panel-left  { transform: translateX(0); box-shadow:  6px 0 32px rgba(0,0,0,0.14); }
+  .main-grid.right-open .panel-right { transform: translateX(0); box-shadow: -6px 0 32px rgba(0,0,0,0.14); }
+
+  .panel-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 49;
+    background: rgba(12,12,11,0.3);
+  }
+
+  .workspace-header { padding: 0 12px; }
+  .workspace-label  { font-size: 10px; }
+  .workspace-meta   { display: none; }
+}

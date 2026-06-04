@@ -70,6 +70,9 @@
     'READY'
   );
 
+  const encStatusClass = $derived(encFab.valid ? 'ready' : 'error');
+  const encStatusText  = $derived(encFab.valid ? 'READY' : 'INVALID DIMS');
+
   const modules = [
     { id: 'box',      label: 'BOX',     locked: false },
     { id: 'gears',    label: 'GEARS',   locked: false },
@@ -79,6 +82,10 @@
   ];
 
   let activeModule = $state('box');
+  let leftOpen  = $state(false);
+  let rightOpen = $state(false);
+
+  function closeDrawers() { leftOpen = false; rightOpen = false; }
 
   // ── Undo / Redo keyboard handler ─────────────────────────────────────
   onMount(() => {
@@ -112,11 +119,11 @@
     if (saved) {
       if (saved.module) activeModule = saved.module;
       if (saved.view)   view = saved.view as typeof view;
-      Object.assign(fab.params, saved.box);
-      Object.assign(gearFab.params, saved.gears);
-      Object.assign(kineticFab.params, saved.kinetic);
-      if (saved.enclosures) Object.assign(encFab.params, saved.enclosures);
-      if (saved.hinges)     Object.assign(hingeFab.params, saved.hinges);
+      fab.restore(saved.box);
+      gearFab.restore(saved.gears);
+      kineticFab.restore(saved.kinetic);
+      if (saved.enclosures) encFab.restore(saved.enclosures);
+      if (saved.hinges)     hingeFab.restore(saved.hinges);
     }
   });
 
@@ -153,7 +160,7 @@
         {#each modules as mod (mod.id)}
           <button
             class="module-btn {mod.id === activeModule ? 'active' : ''} {mod.locked ? 'locked' : ''}"
-            onclick={() => { if (!mod.locked) activeModule = mod.id; }}
+            onclick={() => { if (!mod.locked) { activeModule = mod.id; closeDrawers(); } }}
           >
             {mod.label}
             {#if mod.locked}<span class="module-lock">···</span>{/if}
@@ -182,7 +189,8 @@
           <button class="view-btn {gearView === '2d' ? 'active' : ''}"        onclick={() => gearView = '2d'}>2D  FLAT</button>
           <button class="view-btn {gearView === 'blueprint' ? 'active' : ''}" onclick={() => gearView = 'blueprint'}>BLUEPRINT</button>
           <button class="view-btn {gearView === '3d' ? 'active' : ''} {gearMode !== 'spur' ? 'locked' : ''}"
-            onclick={() => { if (gearMode === 'spur') gearView = '3d'; }}>3D  PRINT</button>
+            onclick={() => { if (gearMode === 'spur') gearView = '3d'; }}
+            title={gearMode !== 'spur' ? '3D print preview is only available for spur gears' : '3D extrusion preview — export STL / OBJ'}>3D  PRINT</button>
         </div>
       {:else if activeModule === 'enclosures'}
         <div class="view-toggle" data-count="2">
@@ -199,17 +207,29 @@
     </div>
 
     <div class="toolbar-right">
+      <!-- Panel drawer toggles — only visible on tablet/narrow screens -->
+      <button class="drawer-toggle" onclick={() => { leftOpen = !leftOpen; rightOpen = false; }} title="Controls panel">
+        ☰
+      </button>
+      <button class="drawer-toggle drawer-toggle-right" onclick={() => { rightOpen = !rightOpen; leftOpen = false; }} title="Stats &amp; export panel">
+        ☰
+      </button>
       {#if activeModule === 'box'}
         <div class="status-pill {statusClass}">
           <span class="status-dot"></span>
           <span class="status-text">{statusText}</span>
         </div>
+      {:else if activeModule === 'enclosures'}
+        <div class="status-pill {encStatusClass}">
+          <span class="status-dot"></span>
+          <span class="status-text">{encStatusText}</span>
+        </div>
       {/if}
       <button class="unit-toggle" onclick={() => units.toggle()} title="Toggle mm / inches">
         {units.label}
       </button>
-      <button class="guide-btn" onclick={() => showGuide = true} title="Fabrication guide — plain language help">
-        ?
+      <button class="guide-btn" onclick={() => showGuide = true} title="Plain-language guide for the current module — explains every term in simple language">
+        GUIDE
       </button>
       <button class="credits-btn" onclick={() => showCredits = true} title="Open source credits">
         CREDITS
@@ -217,7 +237,13 @@
     </div>
   </header>
 
-  <div class="main-grid">
+  <div class="main-grid" class:left-open={leftOpen} class:right-open={rightOpen}>
+    <!-- Backdrop — closes drawers when tapping outside on tablet -->
+    {#if leftOpen || rightOpen}
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <div class="panel-backdrop" onclick={closeDrawers}></div>
+    {/if}
+
     <!-- Left panel -->
     {#if activeModule === 'box'}
       <LeftPanel />
@@ -304,8 +330,8 @@
           {/if}
         {:else}
           <div class="phase-placeholder">
-            <div class="phase-placeholder-label">SIMULATION</div>
-            <div class="phase-placeholder-sub">COMING SOON</div>
+            <div class="phase-placeholder-label">SIMULATION — COMING SOON</div>
+            <div class="phase-placeholder-sub">Physics analysis of hinge flex, joint strength and material stress</div>
           </div>
         {/if}
       </div>
@@ -348,13 +374,13 @@
 
   .guide-btn {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.1em;
     color: var(--white);
-    background: var(--orange);
-    border: 1px solid var(--orange);
-    width: 28px;
+    background: var(--black);
+    border: 1px solid var(--black);
+    padding: 5px 10px;
     height: 28px;
     display: flex;
     align-items: center;
@@ -364,9 +390,26 @@
     flex-shrink: 0;
   }
   .guide-btn:hover {
-    background: var(--orange-d);
-    border-color: var(--orange-d);
+    background: var(--g700);
+    border-color: var(--g700);
   }
+
+  /* Drawer toggle buttons — hidden on desktop, shown on tablet via media query */
+  .drawer-toggle {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--g600);
+    background: none;
+    border: 1px solid var(--g200);
+    width: 28px; height: 28px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.12s;
+    flex-shrink: 0;
+  }
+  .drawer-toggle:hover { color: var(--black); border-color: var(--g400); }
 
   .credits-btn {
     font-family: var(--font-mono);

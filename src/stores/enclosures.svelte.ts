@@ -33,6 +33,14 @@ class EnclosureStore {
 
   panels = $derived<EnclosurePanel[]>(getEnclosurePanels(this.params));
 
+  valid = $derived(
+    this.params.width > 0 &&
+    this.params.height > 0 &&
+    this.params.depth > 0 &&
+    this.params.thickness > 0 &&
+    this.params.thickness * 2 < Math.min(this.params.width, this.params.height, this.params.depth)
+  );
+
   currentPanel = $derived<EnclosurePanel>(
     this.panels.find(p => p.side === this.params.editPanel) ?? this.panels[0]
   );
@@ -135,6 +143,15 @@ class EnclosureStore {
   reset(): void {
     Object.assign(this.params, DEFAULT_ENCLOSURE_PARAMS);
     this.params.cutouts = DEFAULT_ENCLOSURE_PARAMS.cutouts.map(c => ({ ...c }));
+    this._history = [snapParams(this.params)];
+    this._cursor = 0;
+  }
+
+  restore(saved: Partial<EnclosureParams>): void {
+    const restored = saved.cutouts
+      ? { ...saved, cutouts: (saved.cutouts as Cutout[]).map(c => ({ ...c })) }
+      : { ...saved };
+    Object.assign(this.params, restored);
     this._history = [snapParams(this.params)];
     this._cursor = 0;
   }

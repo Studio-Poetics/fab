@@ -194,6 +194,12 @@
     });
   }
 
+  // ADD CUTOUT accordion state — only one group expanded at a time
+  let openGroup = $state<string>('connectors');
+  function toggleGroup(id: string) {
+    openGroup = openGroup === id ? '' : id;
+  }
+
   // Kerf-compensated actual cut dimension for display
   function actualDim(type: CutoutType): string {
     const dims = CUTOUT_DIMS[type];
@@ -286,74 +292,116 @@
   <section class="panel-section">
     <div class="section-label">ADD CUTOUT  →  {p.editPanel.toUpperCase()}</div>
 
-    <div class="cutout-group-label">CONNECTORS</div>
-    <div class="cutout-grid">
-      {#each (['usbc','hdmi_a','hdmi_mini','hdmi_micro'] as CutoutType[]) as type}
-        <button class="cutout-btn" onclick={() => encFab.addCutout(type)} title={actualDim(type) + ' mm'}>
-          <span class="btn-label">{CUTOUT_LABELS[type]}</span>
-          <span class="btn-dim">{actualDim(type)}</span>
-        </button>
-      {/each}
-    </div>
+    <!-- CONNECTORS -->
+    <button class="acc-header" onclick={() => toggleGroup('connectors')}>
+      <span>CONNECTORS</span><span class="acc-arrow">{openGroup === 'connectors' ? '▲' : '▼'}</span>
+    </button>
+    {#if openGroup === 'connectors'}
+      <div class="acc-body">
+        <div class="cutout-grid">
+          {#each (['usbc','hdmi_a','hdmi_mini','hdmi_micro'] as CutoutType[]) as type}
+            <button class="cutout-btn" onclick={() => encFab.addCutout(type)} title={actualDim(type) + ' mm'}>
+              <span class="btn-label">{CUTOUT_LABELS[type]}</span>
+              <span class="btn-dim">{actualDim(type)}</span>
+            </button>
+          {/each}
+        </div>
+      </div>
+    {/if}
 
-    <div class="cutout-group-label" style="margin-top:8px">D-SUB</div>
-    <div class="cutout-grid">
-      {#each (['dsub9','dsub15','dsub25'] as CutoutType[]) as type}
-        <button class="cutout-btn" onclick={() => encFab.addCutout(type)} title={actualDim(type) + ' mm'}>
-          <span class="btn-label">{CUTOUT_LABELS[type]}</span>
-          <span class="btn-dim">{actualDim(type)}</span>
-        </button>
-      {/each}
-    </div>
+    <!-- D-SUB -->
+    <button class="acc-header" onclick={() => toggleGroup('dsub')}>
+      <span>D-SUB</span><span class="acc-arrow">{openGroup === 'dsub' ? '▲' : '▼'}</span>
+    </button>
+    {#if openGroup === 'dsub'}
+      <div class="acc-body">
+        <div class="cutout-grid">
+          {#each (['dsub9','dsub15','dsub25'] as CutoutType[]) as type}
+            <button class="cutout-btn" onclick={() => encFab.addCutout(type)} title={actualDim(type) + ' mm'}>
+              <span class="btn-label">{CUTOUT_LABELS[type]}</span>
+              <span class="btn-dim">{actualDim(type)}</span>
+            </button>
+          {/each}
+        </div>
+      </div>
+    {/if}
 
-    <div class="cutout-group-label" style="margin-top:8px">AUDIO / CONTROLS</div>
-    <div class="cutout-grid">
-      {#each (['xlr','jack635','pot6','switch12'] as CutoutType[]) as type}
-        <button class="cutout-btn" onclick={() => encFab.addCutout(type)} title={actualDim(type) + ' mm'}>
-          <span class="btn-label">{CUTOUT_LABELS[type]}</span>
-          <span class="btn-dim">{actualDim(type)}</span>
-        </button>
-      {/each}
-    </div>
+    <!-- AUDIO / CONTROLS -->
+    <button class="acc-header" onclick={() => toggleGroup('audio')}>
+      <span>AUDIO / CONTROLS</span><span class="acc-arrow">{openGroup === 'audio' ? '▲' : '▼'}</span>
+    </button>
+    {#if openGroup === 'audio'}
+      <div class="acc-body">
+        <div class="cutout-grid">
+          {#each (['xlr','jack635','pot6','switch12'] as CutoutType[]) as type}
+            <button class="cutout-btn" onclick={() => encFab.addCutout(type)} title={actualDim(type) + ' mm'}>
+              <span class="btn-label">{CUTOUT_LABELS[type]}</span>
+              <span class="btn-dim">{actualDim(type)}</span>
+            </button>
+          {/each}
+        </div>
+      </div>
+    {/if}
 
-    <div class="cutout-group-label" style="margin-top:8px">SCREWS  (ISO CLEARANCE)</div>
-    <div class="cutout-grid">
-      {#each (['m2','m2_5','m3','m4','m5'] as CutoutType[]) as type}
-        <button class="cutout-btn" onclick={() => encFab.addCutout(type)} title={actualDim(type) + ' mm'}>
-          <span class="btn-label">{CUTOUT_LABELS[type]}</span>
-          <span class="btn-dim">{actualDim(type)}</span>
-        </button>
-      {/each}
-    </div>
+    <!-- SCREWS -->
+    <button class="acc-header" onclick={() => toggleGroup('screws')}>
+      <span>SCREWS  (ISO CLEARANCE)</span><span class="acc-arrow">{openGroup === 'screws' ? '▲' : '▼'}</span>
+    </button>
+    {#if openGroup === 'screws'}
+      <div class="acc-body">
+        <div class="cutout-grid">
+          {#each (['m2','m2_5','m3','m4','m5'] as CutoutType[]) as type}
+            <button class="cutout-btn" onclick={() => encFab.addCutout(type)} title={actualDim(type) + ' mm'}>
+              <span class="btn-label">{CUTOUT_LABELS[type]}</span>
+              <span class="btn-dim">{actualDim(type)}</span>
+            </button>
+          {/each}
+        </div>
+      </div>
+    {/if}
 
-    <div class="cutout-group-label" style="margin-top:8px">PCB MOUNT  (4-CORNER)</div>
-    <div class="pcb-row">
-      {#each (['m2_5','m3','m4'] as CutoutType[]) as bt}
-        <button class="pcb-bolt-btn {pcbBolt === bt ? 'active' : ''}" onclick={() => pcbBolt = bt}>
-          {CUTOUT_LABELS[bt]}
-        </button>
-      {/each}
-    </div>
-    <div class="pcb-row" style="margin-top:5px; align-items:center; gap:5px">
-      <span class="mini-label" style="min-width:14px">W</span>
-      <input type="number" class="mini-field" value={pcbSpacingW} min="5" max="300" step="1"
-        onchange={e => pcbSpacingW = parseFloat((e.target as HTMLInputElement).value)} />
-      <span class="mini-label">×</span>
-      <input type="number" class="mini-field" value={pcbSpacingH} min="5" max="300" step="1"
-        onchange={e => pcbSpacingH = parseFloat((e.target as HTMLInputElement).value)} />
-      <button class="pcb-add-btn" onclick={addPCBMount}>ADD</button>
-    </div>
-    <div class="hint-text" style="margin-top:4px">Places 4 holes at ±W/2, ±H/2 from panel centre.</div>
+    <!-- PCB MOUNT -->
+    <button class="acc-header" onclick={() => toggleGroup('pcb')}>
+      <span>PCB MOUNT  (4-CORNER)</span><span class="acc-arrow">{openGroup === 'pcb' ? '▲' : '▼'}</span>
+    </button>
+    {#if openGroup === 'pcb'}
+      <div class="acc-body">
+        <div class="pcb-row">
+          {#each (['m2_5','m3','m4'] as CutoutType[]) as bt}
+            <button class="pcb-bolt-btn {pcbBolt === bt ? 'active' : ''}" onclick={() => pcbBolt = bt}>
+              {CUTOUT_LABELS[bt]}
+            </button>
+          {/each}
+        </div>
+        <div class="pcb-row" style="margin-top:5px; align-items:center; gap:5px">
+          <span class="mini-label" style="min-width:14px">W</span>
+          <input type="number" class="mini-field" value={pcbSpacingW} min="5" max="300" step="1"
+            onchange={e => pcbSpacingW = parseFloat((e.target as HTMLInputElement).value)} />
+          <span class="mini-label">×</span>
+          <input type="number" class="mini-field" value={pcbSpacingH} min="5" max="300" step="1"
+            onchange={e => pcbSpacingH = parseFloat((e.target as HTMLInputElement).value)} />
+          <button class="pcb-add-btn" onclick={addPCBMount}>ADD</button>
+        </div>
+        <div class="hint-text" style="margin-top:4px">Places 4 holes at ±W/2, ±H/2 from panel centre.</div>
+      </div>
+    {/if}
 
-    <div class="cutout-group-label" style="margin-top:8px">CUSTOM</div>
-    <div class="cutout-grid">
-      {#each (['circle','rect'] as CutoutType[]) as type}
-        <button class="cutout-btn" onclick={() => encFab.addCutout(type)} title={actualDim(type) + ' mm'}>
-          <span class="btn-label">{CUTOUT_LABELS[type]}</span>
-          <span class="btn-dim">{actualDim(type)}</span>
-        </button>
-      {/each}
-    </div>
+    <!-- CUSTOM -->
+    <button class="acc-header" onclick={() => toggleGroup('custom')}>
+      <span>CUSTOM</span><span class="acc-arrow">{openGroup === 'custom' ? '▲' : '▼'}</span>
+    </button>
+    {#if openGroup === 'custom'}
+      <div class="acc-body">
+        <div class="cutout-grid">
+          {#each (['circle','rect'] as CutoutType[]) as type}
+            <button class="cutout-btn" onclick={() => encFab.addCutout(type)} title={actualDim(type) + ' mm'}>
+              <span class="btn-label">{CUTOUT_LABELS[type]}</span>
+              <span class="btn-dim">{actualDim(type)}</span>
+            </button>
+          {/each}
+        </div>
+      </div>
+    {/if}
   </section>
 
   <!-- CUTOUTS LIST -->
@@ -534,6 +582,30 @@
     width: 14px;
     height: 14px;
   }
+
+  /* ── Accordion ── */
+  .acc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 7px 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--g600);
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--g100);
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.1s;
+    margin-top: 4px;
+  }
+  .acc-header:hover { color: var(--black); }
+  .acc-arrow { font-size: 8px; color: var(--g400); }
+  .acc-body { padding: 8px 0 4px; }
 
   /* ── Cutout buttons ── */
   .cutout-group-label {

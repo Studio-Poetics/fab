@@ -189,7 +189,7 @@
     {#each panel.cutouts as c (c.id)}
       {@const isSelected = selected === c.id}
       {@const isDragging = dragging === c.id}
-      {@const strokeClr  = isSelected ? '#E85D04' : '#0C0C0B'}
+      {@const strokeClr  = isSelected ? '#C05430' : '#0C0C0B'}
       {@const strokeW    = isSelected ? 2 : 1}
       {@const pathD      = previewPath(c)}
       {@const hh         = cutoutHalfH(c)}
@@ -215,18 +215,18 @@
       {#if isSelected || isDragging}
         <text x={px(c.x)} y={py(c.y) - hh - 10}
           text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9"
-          fill="#E85D04" pointer-events="none">
+          fill="#C05430" pointer-events="none">
           {c.x.toFixed(1)}, {c.y.toFixed(1)} mm
         </text>
         <!-- Reference lines from panel corner to cutout -->
         <line x1={offX} y1={py(c.y)} x2={px(c.x)} y2={py(c.y)}
-          stroke="#E85D04" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.5"
+          stroke="#C05430" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.5"
           pointer-events="none"/>
         <line x1={px(c.x)} y1={offY} x2={px(c.x)} y2={py(c.y)}
-          stroke="#E85D04" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.5"
+          stroke="#C05430" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.5"
           pointer-events="none"/>
         <!-- Small origin marker -->
-        <circle cx={offX} cy={offY} r="3" fill="#E85D04" opacity="0.7" pointer-events="none"/>
+        <circle cx={offX} cy={offY} r="3" fill="#C05430" opacity="0.7" pointer-events="none"/>
       {/if}
     {/each}
 

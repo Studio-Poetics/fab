@@ -726,7 +726,7 @@
     font-family: 'IBM Plex Mono', monospace;
     font-size: 9px; font-weight: 600;
     letter-spacing: 0.14em;
-    color: var(--orange, #E85D04);
+    color: var(--orange, #C05430);
     background: rgba(232,93,4,.08);
     padding: 2px 7px;
     white-space: nowrap;
@@ -748,7 +748,7 @@
   .step-n {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 16px; font-weight: 600;
-    color: var(--orange, #E85D04);
+    color: var(--orange, #C05430);
     min-width: 24px; line-height: 1.4;
     flex-shrink: 0;
   }

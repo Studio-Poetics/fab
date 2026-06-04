@@ -128,6 +128,12 @@ class GearStore {
     this._history = [{ ...DEFAULT_GEAR_PARAMS }];
     this._cursor  = 0;
   }
+
+  restore(saved: Partial<GearParams>): void {
+    Object.assign(this.params, saved);
+    this._history = [{ ...this.params }];
+    this._cursor  = 0;
+  }
 }
 
 export const gearFab = new GearStore();
