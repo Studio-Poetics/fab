@@ -97,23 +97,38 @@
   const PRESETS: EnclosurePreset[] = [
     {
       label: 'RPi 4',
-      desc: 'Raspberry Pi 4 — USB-C power, dual micro-HDMI, audio',
-      enc:  { width: 95, height: 40, depth: 70, thickness: 3 },
+      desc: 'Raspberry Pi 4 — IO back, USB+LAN right, GPIO top',
+      // Board 85×56mm: long axis (85mm) along width. Long edge has USB-C/HDMI/audio → back.
+      // Short edge (56mm) has USB×4 + Ethernet → right panel. GPIO on other long edge → top.
+      enc:  { width: 95, height: 35, depth: 65, thickness: 3 },
       cutouts: [
-        { type: 'usbc',       x: 13,  y: 20, label: 'PWR',    panel: 'back'  },
-        { type: 'hdmi_micro', x: 30,  y: 20, label: 'HDMI 0', panel: 'back'  },
-        { type: 'hdmi_micro', x: 47,  y: 20, label: 'HDMI 1', panel: 'back'  },
-        { type: 'jack635',    x: 62,  y: 20, label: 'AUDIO',  panel: 'back'  },
-        { type: 'rect',       x: 48,  y: 20, label: 'GPIO',   panel: 'top', w: 52, h: 5 },
+        // BACK panel (95×35mm) — long edge (85mm): USB-C, HDMI×2, audio; 5mm board margins
+        { type: 'usbc',       x: 20,  y: 18, label: 'PWR',    panel: 'back' },
+        { type: 'hdmi_micro', x: 34,  y: 18, label: 'HDMI 0', panel: 'back' },
+        { type: 'hdmi_micro', x: 49,  y: 18, label: 'HDMI 1', panel: 'back' },
+        { type: 'jack635',    x: 65,  y: 18, label: 'AUDIO',  panel: 'back' },
+        // RIGHT panel (65×35mm) — short edge (56mm): USB3, USB2, Ethernet; 4.5mm margins
+        { type: 'rect',  x: 15,  y: 18, label: 'USB 3',  panel: 'right', w: 14, h: 17 },
+        { type: 'rect',  x: 32,  y: 18, label: 'USB 2',  panel: 'right', w: 14, h: 17 },
+        { type: 'rect',  x: 50,  y: 18, label: 'LAN',    panel: 'right', w: 17, h: 14 },
+        // TOP panel (95×65mm) — GPIO 2×20 header slot near front long edge of board
+        { type: 'rect',  x: 34,  y:  8, label: 'GPIO',   panel: 'top',   w: 52, h:  6 },
       ],
     },
     {
       label: 'ARDUINO',
-      desc: 'Arduino Uno — USB-B port + DC barrel jack',
-      enc:  { width: 85, height: 35, depth: 68, thickness: 3 },
+      desc: 'Arduino Uno — USB-B + DC jack back, pin header slots top',
+      // Board 68.6×53.4mm: long axis along depth (78mm), short axis along width (64mm).
+      // USB-B + DC jack are on the 53.4mm short edge → face back panel (64mm wide).
+      // Pin header rows run along the 68.6mm long edges → slots in top panel (64×78mm).
+      enc:  { width: 64, height: 30, depth: 78, thickness: 3 },
       cutouts: [
-        { type: 'rect',   x: 20,  y: 17.5, label: 'USB-B', panel: 'back', w: 12, h: 8  },
-        { type: 'circle', x: 55,  y: 17.5, label: 'DC 9V', panel: 'back', d: 6.4       },
+        // BACK panel (64×30mm) — USB-B + DC jack (board short edge 53.4mm, 5.3mm margins)
+        { type: 'circle', x: 11,  y: 15, label: 'DC 9V', panel: 'back', d: 6.4       },
+        { type: 'rect',   x: 49,  y: 15, label: 'USB-B', panel: 'back', w: 13, h: 13 },
+        // TOP panel (64×78mm) — two pin header rows near each long edge of the board
+        { type: 'rect',   x:  8,  y: 40, label: 'PINS',  panel: 'top',  w:  6, h: 50 },
+        { type: 'rect',   x: 56,  y: 40, label: 'PINS',  panel: 'top',  w:  6, h: 50 },
       ],
     },
     {
